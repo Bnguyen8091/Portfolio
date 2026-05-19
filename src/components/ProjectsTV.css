@@ -1,0 +1,335 @@
+.ptv-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+/* ─── TV WRAP ─── */
+.ptv-tv-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ptv-body {
+  width: 100%;
+  background: linear-gradient(160deg, #2e2e2e 0%, #1c1c1c 60%, #111 100%);
+  border-radius: 16px 16px 8px 8px;
+  padding: 14px 14px 0;
+  box-shadow:
+    inset 0 3px 6px rgba(255,255,255,0.06),
+    inset 0 -3px 8px rgba(0,0,0,0.7),
+    0 12px 40px rgba(0,0,0,0.9),
+    0 4px 8px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.07);
+  position: relative;
+}
+
+/* ─── SCREEN ─── */
+.ptv-screen {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #040404;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.95);
+}
+
+.ptv-scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.14) 2px,
+    rgba(0,0,0,0.14) 4px
+  );
+}
+
+.ptv-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* ─── GLITCH EFFECT ─── */
+.ptv-glitch-noise {
+  position: absolute; inset: 0; z-index: 8; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  background-color: rgba(8,8,8,0.5);
+  animation: glitchNoise 0.4s steps(1) forwards;
+}
+.ptv-glitch-bar {
+  position: absolute; left: 0; right: 0; z-index: 7; pointer-events: none;
+  background-size: cover;
+  background-position: center center;
+}
+.ptv-bar1 {
+  top: 18%; height: 12%;
+  animation: glitchBar1 0.4s steps(1) forwards;
+  filter: hue-rotate(180deg) saturate(4);
+  mix-blend-mode: screen;
+}
+.ptv-bar2 {
+  top: 58%; height: 8%;
+  animation: glitchBar2 0.4s steps(1) forwards;
+  filter: hue-rotate(-90deg) saturate(3);
+  mix-blend-mode: screen;
+}
+.ptv-glitch-rgb {
+  position: absolute; inset: 0; z-index: 6; pointer-events: none;
+  animation: glitchRGB 0.4s steps(1) forwards;
+}
+.ptv-img-glitch {
+  animation: glitchImg 0.4s steps(1) forwards;
+}
+
+/* ─── HOVER OVERLAY → GITHUB ─── */
+.ptv-hover-overlay {
+  position: absolute; inset: 0; z-index: 5;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s;
+  backdrop-filter: blur(2px);
+  text-decoration: none;
+}
+.ptv-hover-overlay span {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.35);
+  padding: 0.55rem 1.4rem;
+  background: rgba(0,0,0,0.5);
+}
+.ptv-screen:hover .ptv-hover-overlay { opacity: 1; }
+.ptv-screen:hover .ptv-img { filter: brightness(0.55); }
+
+/* channel badge top-left of screen */
+.ptv-ch-badge {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  z-index: 6;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--orange);
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--border-bright);
+  padding: 0.15rem 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+/* ─── BEZEL STRIP ─── */
+.ptv-bezel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(0,0,0,0.4);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-radius: 0 0 8px 8px;
+}
+.ptv-bezel-label {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ptv-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.ptv-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  padding: 0;
+}
+.ptv-dot.active {
+  background: var(--orange);
+  box-shadow: 0 0 6px var(--orange);
+}
+.ptv-dot:hover { background: rgba(249,115,22,0.5); }
+
+.ptv-signal {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.45rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.1em;
+}
+.ptv-signal-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 5px var(--orange);
+  animation: pulse 1.5s infinite;
+}
+
+/* ─── TV LEGS ─── */
+.ptv-legs {
+  display: flex;
+  justify-content: center;
+  gap: 55%;
+  width: 100%;
+}
+.ptv-leg {
+  width: 10px; height: 18px;
+  background: linear-gradient(to bottom, #222, #111);
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+}
+
+/* ─── INFO PANEL ─── */
+.ptv-info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.ptv-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.ptv-info-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.ptv-category {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--orange);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ptv-date {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+.ptv-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.05em;
+  color: var(--text);
+  line-height: 1;
+}
+.ptv-desc {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+.ptv-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* ─── CONTROLS ─── */
+.ptv-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.ptv-btn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--orange);
+  background: transparent;
+  border: 1px solid var(--border-bright);
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+.ptv-btn:hover {
+  background: var(--orange);
+  color: var(--bg);
+  box-shadow: 0 0 16px var(--orange-glow);
+}
+.ptv-counter {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  flex: 1;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .ptv-layout { grid-template-columns: 1fr; }
+}
+
+/* ─── SHARED GLITCH KEYFRAMES ─── */
+@keyframes glitchNoise {
+  0%   { opacity: 0; }
+  5%   { opacity: 1; }
+  15%  { opacity: 0.2; }
+  20%  { opacity: 0.9; }
+  30%  { opacity: 0.1; }
+  40%  { opacity: 0.85; }
+  50%  { opacity: 0.05; }
+  60%  { opacity: 0.7; }
+  70%  { opacity: 0; }
+  80%  { opacity: 0.5; }
+  90%  { opacity: 0.1; }
+  100% { opacity: 0; }
+}
+@keyframes glitchBar1 {
+  0%   { transform: translateX(0);     opacity: 0; }
+  10%  { transform: translateX(-12px); opacity: 0.9; }
+  25%  { transform: translateX(10px);  opacity: 0.6; }
+  40%  { transform: translateX(-6px);  opacity: 0.8; }
+  55%  { transform: translateX(14px);  opacity: 0.4; }
+  70%  { transform: translateX(-4px);  opacity: 0.6; }
+  85%  { transform: translateX(8px);   opacity: 0.2; }
+  100% { transform: translateX(0);     opacity: 0; }
+}
+@keyframes glitchBar2 {
+  0%   { transform: translateX(0);    opacity: 0; }
+  10%  { transform: translateX(16px); opacity: 0.8; }
+  30%  { transform: translateX(-8px); opacity: 0.5; }
+  50%  { transform: translateX(10px); opacity: 0.7; }
+  70%  { transform: translateX(-12px);opacity: 0.3; }
+  90%  { transform: translateX(6px);  opacity: 0.5; }
+  100% { transform: translateX(0);    opacity: 0; }
+}
+@keyframes glitchRGB {
+  0%   { background: transparent; }
+  10%  { background: rgba(255,0,60,0.12); }
+  20%  { background: rgba(0,255,200,0.1); }
+  35%  { background: transparent; }
+  50%  { background: rgba(255,100,0,0.08); }
+  65%  { background: rgba(0,180,255,0.07); }
+  80%  { background: transparent; }
+  100% { background: transparent; }
+}
+@keyframes glitchImg {
+  0%   { transform: translateX(0) skewX(0); }
+  10%  { transform: translateX(-4px) skewX(-1deg); }
+  25%  { transform: translateX(5px)  skewX(1.5deg); }
+  40%  { transform: translateX(-3px) skewX(-0.5deg); }
+  55%  { transform: translateX(4px)  skewX(1deg); }
+  70%  { transform: translateX(-2px) skewX(0); }
+  85%  { transform: translateX(3px); }
+  100% { transform: translateX(0); }
+}

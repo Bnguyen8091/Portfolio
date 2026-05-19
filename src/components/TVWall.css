@@ -1,0 +1,199 @@
+/* ─── TV WALL GRID ─── */
+.tv-wall {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: end;
+  width: 100%;
+}
+
+/* ─── INDIVIDUAL CRT TV ─── */
+.crt-tv {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.crt-tv:hover { transform: translateY(-4px) scale(1.04); }
+.crt-tv:active { transform: scale(0.97); }
+
+/* TV BODY — the plastic shell */
+.tv-body {
+  width: 100%;
+  background: linear-gradient(160deg, #2e2e2e 0%, #1a1a1a 60%, #111 100%);
+  border-radius: 14px 14px 8px 8px;
+  padding: 12px 12px 0;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.06),
+    inset 0 -2px 6px rgba(0,0,0,0.6),
+    0 8px 28px rgba(0,0,0,0.8),
+    0 2px 4px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+  transition: box-shadow 0.25s;
+}
+
+/* active state — colored glow on body */
+.crt-tv.active .tv-body {
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.06),
+    inset 0 -2px 6px rgba(0,0,0,0.6),
+    0 6px 20px rgba(0,0,0,0.7),
+    0 0 20px var(--ch-color),
+    0 0 40px rgba(249,115,22,0.2);
+}
+.crt-tv:hover .tv-body {
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.06),
+    inset 0 -2px 6px rgba(0,0,0,0.6),
+    0 8px 24px rgba(0,0,0,0.7),
+    0 0 14px rgba(249,115,22,0.25);
+}
+
+/* TV SCREEN */
+.tv-screen {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #060606;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    inset 0 0 24px rgba(0,0,0,0.9),
+    inset 0 0 8px rgba(0,0,0,0.6);
+}
+
+/* scanlines */
+.tv-scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.18) 2px,
+    rgba(0,0,0,0.18) 4px
+  );
+}
+
+/* noise texture */
+.tv-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  animation: staticFlash 2s infinite;
+}
+
+/* screen content */
+.tv-content {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tv-ch-num {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.18);
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+.crt-tv:hover .tv-ch-num,
+.crt-tv.active .tv-ch-num { color: var(--ch-color); }
+
+.tv-label-big {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--ch-color);
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 16px var(--ch-color);
+}
+
+/* active glow inside screen */
+.tv-active-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse at center, rgba(249,115,22,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* brand TV idle static */
+.tv-static-idle {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,0.01) 0px,
+    transparent 2px,
+    rgba(255,255,255,0.01) 4px
+  );
+  pointer-events: none;
+}
+
+/* bottom bezel strip */
+.tv-bezel-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  background: rgba(0,0,0,0.3);
+  border-top: 1px solid rgba(255,255,255,0.04);
+  border-radius: 0 0 8px 8px;
+}
+.tv-bezel-label {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.crt-tv.active .tv-bezel-label,
+.crt-tv:hover .tv-bezel-label { color: var(--ch-color); }
+
+.tv-signal-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.tv-signal-dot.on {
+  background: var(--ch-color);
+  box-shadow: 0 0 5px var(--ch-color);
+  animation: pulse 1.5s infinite;
+}
+
+/* TV LEGS */
+.tv-legs {
+  display: flex;
+  justify-content: center;
+  gap: 40%;
+  width: 100%;
+}
+.tv-leg {
+  width: 8px;
+  height: 14px;
+  background: linear-gradient(to bottom, #222, #111);
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.6);
+}
+
+/* brand TV — slightly larger in grid */
+.crt-tv.brand .tv-body { background: linear-gradient(160deg, #1e1e1e 0%, #111 100%); }
+.crt-tv.brand .tv-label-big,
+.crt-tv.brand .tv-ch-num { color: #fff; }
+
+@media (max-width: 900px) {
+  .tv-wall { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+}

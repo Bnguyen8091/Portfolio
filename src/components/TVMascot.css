@@ -1,0 +1,325 @@
+/* ── TVMascot — fixed scroll-to-top mascot ── */
+
+.mascot-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 1.5rem;
+  z-index: 999;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  outline: none;
+  animation: mascotBob 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 4px 12px rgba(249, 115, 22, 0));
+  transition: filter 0.2s ease;
+}
+
+.mascot-btn:hover {
+  filter: drop-shadow(0 4px 18px rgba(249, 115, 22, 0.55));
+  animation: none;
+}
+
+@keyframes mascotBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+/* ── antenna ── */
+.mascot-antenna {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: -1px;
+}
+
+.mascot-antenna-stick {
+  width: 3px;
+  height: 14px;
+  background: #ccc;
+  border-radius: 2px;
+}
+
+.mascot-antenna-ball {
+  width: 7px;
+  height: 7px;
+  background: var(--orange, #F97316);
+  border-radius: 50%;
+  margin-bottom: -1px;
+  box-shadow: 0 0 6px rgba(249, 115, 22, 0.8);
+}
+
+/* ── TV body ── */
+.mascot-tv {
+  width: 72px;
+  background: linear-gradient(160deg, #2a2a2a 0%, #1a1a1a 60%, #111 100%);
+  border-radius: 10px 10px 8px 8px;
+  border: 2px solid #333;
+  padding: 6px 6px 4px;
+  position: relative;
+  transition: border-color 0.2s, transform 0.1s;
+}
+
+.mascot-tv.hovered {
+  border-color: rgba(249, 115, 22, 0.7);
+}
+
+.mascot-tv.clicked {
+  transform: scale(0.93);
+  border-color: var(--orange, #F97316);
+}
+
+/* ── screen ── */
+.mascot-screen {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #0a0a0a;
+  border-radius: 5px;
+  border: 2px solid #222;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* scanlines */
+.mascot-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.25) 2px,
+    rgba(0, 0, 0, 0.25) 4px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── face ── */
+.mascot-face {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.mascot-eyes {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.mascot-eyes.excited {
+  gap: 6px;
+}
+
+.eye {
+  display: block;
+  color: var(--orange, #F97316);
+  font-size: 11px;
+  line-height: 1;
+  font-family: monospace;
+  font-style: normal;
+}
+
+.dot-eye {
+  width: 6px;
+  height: 6px;
+  background: var(--orange, #F97316);
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 0 4px rgba(249, 115, 22, 0.6);
+}
+
+.star-eye {
+  font-size: 13px;
+  animation: starPulse 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes starPulse {
+  from { text-shadow: 0 0 4px rgba(249, 115, 22, 0.4); }
+  to   { text-shadow: 0 0 10px rgba(249, 115, 22, 1); }
+}
+
+.arc-eye {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.mascot-mouth {
+  color: var(--orange, #F97316);
+  font-size: 13px;
+  line-height: 1;
+  text-align: center;
+}
+
+.mascot-mouth.big-smile {
+  font-size: 11px;
+  transform: rotate(180deg);
+  display: block;
+}
+
+/* blush dots */
+.mascot-blush {
+  position: absolute;
+  width: 38px;
+  height: 6px;
+  background: radial-gradient(circle at 30% 50%, rgba(249, 115, 22, 0.3) 0%, transparent 70%),
+              radial-gradient(circle at 70% 50%, rgba(249, 115, 22, 0.3) 0%, transparent 70%);
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* ↑ TOP hint */
+.mascot-hint {
+  position: absolute;
+  bottom: 3px;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 7px;
+  font-family: var(--font-mono, monospace);
+  color: var(--orange, #F97316);
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* ── bezel strip ── */
+.mascot-bezel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 2px 1px;
+}
+
+.mascot-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #333;
+}
+
+.mascot-tv.hovered .mascot-dot {
+  background: rgba(249, 115, 22, 0.5);
+}
+
+.mascot-bezel-label {
+  font-family: var(--font-mono, monospace);
+  font-size: 6px;
+  color: #555;
+  letter-spacing: 0.08em;
+}
+
+.mascot-tv.hovered .mascot-bezel-label {
+  color: rgba(249, 115, 22, 0.7);
+}
+
+/* ── glitch-in overlays ── */
+.mascot-glitch-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
+  opacity: 0;
+  mix-blend-mode: screen;
+  animation: mGlitchNoise 0.45s steps(1) forwards;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.mascot-glitch-bar {
+  position: absolute;
+  left: 0; right: 0;
+  height: 35%;
+  background: rgba(249, 115, 22, 0.18);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 21;
+}
+
+.mascot-bar1 {
+  top: 10%;
+  animation: mGlitchBar1 0.45s steps(1) forwards;
+}
+
+.mascot-bar2 {
+  bottom: 5%;
+  animation: mGlitchBar2 0.45s steps(1) forwards;
+}
+
+.mascot-glitch-rgb {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: mGlitchRGB 0.45s steps(1) forwards;
+  z-index: 22;
+  pointer-events: none;
+}
+
+@keyframes mGlitchNoise {
+  0%   { opacity: 0; }
+  8%   { opacity: 0.9; }
+  20%  { opacity: 0.3; transform: translateY(-2px); }
+  35%  { opacity: 0.7; transform: translateY(2px); }
+  50%  { opacity: 0.2; transform: translateY(0); }
+  65%  { opacity: 0.5; }
+  80%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes mGlitchBar1 {
+  0%   { transform: translateY(0)  scaleY(0); opacity: 0; }
+  10%  { transform: translateY(-4px) scaleY(1); opacity: 1; }
+  25%  { transform: translateY(6px)  scaleY(0.6); opacity: 0.8; }
+  40%  { transform: translateY(-2px) scaleY(1.2); opacity: 0.5; }
+  60%  { transform: translateY(0)   scaleY(0.3); opacity: 0.2; }
+  80%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes mGlitchBar2 {
+  0%   { transform: translateY(0)  scaleY(0); opacity: 0; }
+  15%  { transform: translateY(5px) scaleY(1); opacity: 0.9; }
+  30%  { transform: translateY(-3px) scaleY(0.5); opacity: 0.6; }
+  50%  { transform: translateY(2px)  scaleY(1); opacity: 0.3; }
+  70%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes mGlitchRGB {
+  0%   { opacity: 0; background: transparent; }
+  12%  { opacity: 1; background: rgba(255, 0, 80, 0.15); }
+  24%  { background: rgba(0, 255, 220, 0.12); }
+  36%  { background: rgba(249, 115, 22, 0.2); }
+  50%  { background: rgba(0, 80, 255, 0.1); }
+  65%  { opacity: 0.3; background: transparent; }
+  80%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ── legs ── */
+.mascot-legs {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.mascot-leg {
+  width: 8px;
+  height: 10px;
+  background: linear-gradient(to bottom, #2a2a2a, #181818);
+  border-radius: 0 0 3px 3px;
+  border: 1px solid #333;
+  border-top: none;
+}

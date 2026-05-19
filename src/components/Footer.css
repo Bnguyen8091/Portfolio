@@ -1,0 +1,37 @@
+.footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 4rem;
+}
+.footer-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 5vw;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.footer-inner span { color: var(--orange); }
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  color: var(--text);
+}
+.footer-signal {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.blink {
+  animation: blink 1.2s step-end infinite;
+}
+
+@media (max-width: 600px) {
+  .footer-inner { flex-direction: column; gap: 0.5rem; text-align: center; }
+}
